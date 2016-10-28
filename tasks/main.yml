@@ -1,0 +1,92 @@
+---
+
+- name: Check if all files are installed
+  yum:
+    name: "{{ item | regex_replace( '^([^-]*)(.*)', '\\1' ) }}"
+    state: installed
+  with_items: "{{ netcobol_files_to_install }}"
+  register: __netcobol_installed
+  ignore_errors: yes
+
+# Logical Check Fails So Local Information Is Created and destroyed.
+# On Testing where we know that no rpms are present we don't create
+# the directory for idempotency
+- name: Create storage directory
+  file:
+    path: "{{ netcobol_src_storage }}"
+    state: directory
+  when:
+    - __netcobol_installed|failed
+    - not __netcobol_testing
+
+- name: Transfer rpm files
+  copy:
+    src: "{{ item }}"
+    dest: "{{ netcobol_src_storage }}/{{ item }}"
+  with_items: "{{ netcobol_files_to_install }}"
+  register: __netcobol_transfer
+  ignore_errors: yes
+  when: __netcobol_installed|failed
+
+- name: Install Local RPMS
+  yum:
+    name: "{{ netcobol_src_storage }}/{{ item }}"
+    state: installed
+  with_items: "{{ netcobol_files_to_install }}"
+  register: __netcobol_local_installed
+  when:
+    - __netcobol_installed|failed
+    - __netcobol_transfer|success
+
+# File absent on a folder works recursively removing all the rpms that were
+# added leaving us with the packages installed but
+- name: Remove storage directory
+  file:
+    path: "{{ netcobol_src_storage }}"
+    state: absent
+  when: __netcobol_installed|failed
+
+- debug:
+    msg: "No files were transfered because RPMs specified were not present"
+  when:
+    - __netcobol_installed|failed
+    - __netcobol_transfer|failed
+
+- fail:
+    msg: "Failed Because RPM Installation Process Unsuccessful"
+  when:
+    - __netcobol_installed|failed
+    - __netcobol_transfer|failed
+    - netcobol_fail_on_rpms
+
+# Handling License File Considerations
+- name: Ensure license file install location exists
+  file:
+    path: "{{ netcobol_license_file_location }}"
+    state: directory
+
+- name: Install License File If It Exists
+  copy:
+    src: "{{ netcobol_local_license_file_name }}"
+    dest: "{{ netcobol_license_file_location }}/{{ netcobol_remote_license_file_name }}"
+  register: __netcobol_install_license
+  ignore_errors: yes
+
+- name: Check if License File Exists
+  stat:
+    path: "{{ netcobol_license_file_location }}/{{ netcobol_remote_license_file_name }}"
+  register: __netcobol_license
+
+- name: Announce Mac Address to Get License File If Not Present
+  debug:
+    msg: "Go Obtain License - MAC Address -  {{ ansible_default_ipv4.macaddress }}"
+  when:
+    - __netcobol_install_license|failed
+    - not __netcobol_license.stat.exists
+
+- fail:
+    msg: Failed Because License file Installation Process Unsuccessful
+  when:
+    - __netcobol_install_license|failed
+    - not __netcobol_license.stat.exists
+    - netcobol_fail_on_license

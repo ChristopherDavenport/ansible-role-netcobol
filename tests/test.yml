@@ -1,0 +1,8 @@
+---
+- hosts: all
+  vars:
+    __netcobol_testing: True
+    netcobol_fail_on_license: False
+    netcobol_fail_on_rpms: False
+  roles:
+    - role_under_test

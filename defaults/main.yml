@@ -1,0 +1,42 @@
+---
+
+# If no license file exists at the install location or
+# in the files directory to be installed fail the role
+netcobol_fail_on_license: True
+
+# Specifies whether failure should occur if RPM are not present and
+# installed correctly.
+netcobol_fail_on_rpms: True
+
+# The location that the netcobol install files will be copied to
+netcobol_src_storage: /usr/local/src/netcobol
+
+# Netcobol Local Location to Scan The Folder
+# If you have different files all you need to do is update this list
+# with their appropriate name
+netcobol_files_to_install:
+  - FJSVXcbrf-11.0.0-1.0.x86_64.rpm
+  - FJSVXbsrt-7.0.0-3.0.x86_64.rpm
+  - FJSVXmeft-11.0.0-2.0.x86_64.rpm
+  - FJSVXcbev-11.0.0-3.0.x86_64.rpm
+  - FJSVXrds-11.0.0-1.0.x86_64.rpm
+  - FJSVXcbl-11.0.0-1.0.x86_64.rpm
+  - FJSVXcblf-11.0.0-1.0.x86_64.rpm
+  - FJSVXcbr-11.0.0-1.0.x86_64.rpm
+  - FJSVXcbre-11.0.0-1.0.x86_64.rpm
+
+# The name of the local license file incase you decided the change
+# it or you have multiples that you want to install on multiple computers
+# then you only need to adjust this variable.
+netcobol_local_license_file_name: license.txt
+
+# The location to put the license file on the remote machine
+# Unless they change procedure drastically this should not need to change
+netcobol_license_file_location: /etc/opt/NetCOBOL/
+
+# The name of the license file on the remote machine
+# Unless they change procedure drastically this should not need to change
+netcobol_remote_license_file_name: license.txt
+
+# Simply Stops Creating The Storage Directory
+__netcobol_testing: False
