@@ -1,7 +1,7 @@
 ---
 
 - name: Check if all files are installed
-  yum:
+  package:
     name: "{{ item | regex_replace( '^([^-]*)(.*)', '\\1' ) }}"
     state: installed
   with_items: "{{ netcobol_files_to_install }}"
@@ -29,7 +29,7 @@
   when: __netcobol_installed|failed
 
 - name: Install Local RPMS
-  yum:
+  package:
     name: "{{ netcobol_src_storage }}/{{ item }}"
     state: installed
   with_items: "{{ netcobol_files_to_install }}"
@@ -80,6 +80,7 @@
 - name: Announce Mac Address to Get License File If Not Present
   debug:
     msg: "Go Obtain License - MAC Address -  {{ ansible_default_ipv4.macaddress }}"
+  ignore_errors: True
   when:
     - __netcobol_install_license|failed
     - not __netcobol_license.stat.exists

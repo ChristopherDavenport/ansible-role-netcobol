@@ -1,9 +1,11 @@
 # NetCobol Installation For Linux
 
+[![Build Status](https://travis-ci.org/ChristopherDavenport/ansible-role-netcobol.svg?branch=master)](https://travis-ci.org/ChristopherDavenport/ansible-role-netcobol)
+
 This is proprietary software sold by Fujitsu and managed in America by
 GTSoftware. You will first need to have the software. As it is extremely
-illegal for my to distribute proprietary software. However this will
-guide you through their installation.
+illegal for me to distribute proprietary software. However this will
+guide you through its installation smoothly.
 
 The software is available as an rpm so I will attempt compatibility with
 RedHat 7, Centos 7, RedHat 6, Centos 6, and Fedora.
