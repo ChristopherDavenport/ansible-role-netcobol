@@ -14,16 +14,17 @@ netcobol_src_storage: /usr/local/src/netcobol
 # Netcobol Local Location to Scan The Folder
 # If you have different files all you need to do is update this list
 # with their appropriate name
-netcobol_files_to_install:
-  - FJSVXcbrf-11.0.0-1.0.x86_64.rpm
-  - FJSVXbsrt-7.0.0-3.0.x86_64.rpm
-  - FJSVXmeft-11.0.0-2.0.x86_64.rpm
-  - FJSVXcbev-11.0.0-3.0.x86_64.rpm
-  - FJSVXrds-11.0.0-1.0.x86_64.rpm
-  - FJSVXcbl-11.0.0-1.0.x86_64.rpm
-  - FJSVXcblf-11.0.0-1.0.x86_64.rpm
-  - FJSVXcbr-11.0.0-1.0.x86_64.rpm
-  - FJSVXcbre-11.0.0-1.0.x86_64.rpm
+netcobol_files_to_install: []
+#   - /path/to/RPM
+#   - FJSVXcbrf-11.0.0-1.0.x86_64.rpm
+#   - FJSVXbsrt-7.0.0-3.0.x86_64.rpm
+#   - FJSVXmeft-11.0.0-2.0.x86_64.rpm
+#   - FJSVXcbev-11.0.0-3.0.x86_64.rpm
+#   - FJSVXrds-11.0.0-1.0.x86_64.rpm
+#   - FJSVXcbl-11.0.0-1.0.x86_64.rpm
+#   - FJSVXcblf-11.0.0-1.0.x86_64.rpm
+#   - FJSVXcbr-11.0.0-1.0.x86_64.rpm
+#   - FJSVXcbre-11.0.0-1.0.x86_64.rpm
 
 # The name of the local license file incase you decided the change
 # it or you have multiples that you want to install on multiple computers
