@@ -2,7 +2,7 @@
 
 - name: Check if all files are installed
   package:
-    name: "{{ item | regex_replace( '^([^-]*)(.*)', '\\1' ) }}"
+    name: "{{ item | basename | regex_replace( '^([^-]*)(.*)', '\\1' ) }}"
     state: installed
   with_items: "{{ netcobol_files_to_install }}"
   register: __netcobol_installed
@@ -22,15 +22,16 @@
 - name: Transfer rpm files
   copy:
     src: "{{ item }}"
-    dest: "{{ netcobol_src_storage }}/{{ item }}"
+    dest: "{{ netcobol_src_storage }}/{{ item | basename }}"
   with_items: "{{ netcobol_files_to_install }}"
   register: __netcobol_transfer
   ignore_errors: yes
-  when: __netcobol_installed|failed
+  when:
+    - __netcobol_installed|failed
 
 - name: Install Local RPMS
   package:
-    name: "{{ netcobol_src_storage }}/{{ item }}"
+    name: "{{ netcobol_src_storage }}/{{ item | basename }}"
     state: installed
   with_items: "{{ netcobol_files_to_install }}"
   register: __netcobol_local_installed

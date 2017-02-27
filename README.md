@@ -115,6 +115,17 @@ to run this.
 
 ```
 - hosts: appservers
+  vars: 
+    netcobol_files_to_install:
+      - /path/to/rpms/FJSVXcbrf-11.0.0-1.0.x86_64.rpm
+      - /path/to/rpms/FJSVXbsrt-7.0.0-3.0.x86_64.rpm
+      - /path/to/rpms/FJSVXmeft-11.0.0-2.0.x86_64.rpm
+      - /path/to/rpms/FJSVXcbev-11.0.0-3.0.x86_64.rpm
+      - /path/to/rpms/FJSVXrds-11.0.0-1.0.x86_64.rpm
+      - /path/to/rpms/FJSVXcbl-11.0.0-1.0.x86_64.rpm
+      - /path/to/rpms/FJSVXcblf-11.0.0-1.0.x86_64.rpm
+      - /path/to/rpms/FJSVXcbr-11.0.0-1.0.x86_64.rpm
+      - /path/to/rpms/FJSVXcbre-11.0.0-1.0.x86_64.rpm
   roles:
     - ChristopherDavenport.netcobol
 ```
