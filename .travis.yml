@@ -1,25 +1,31 @@
-services: docker
+language: python
+services:
+  - docker
 
 env:
-  - distro: centos7
+  - distribution: EL
+    distribution_version: "7"
     init: /usr/lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-  - distro: centos6
+  - distribution: EL
+    distribution_version: "6"
     init: /sbin/init
     run_opts: ""
-  - distro: fedora24
+  - distribution: Fedora
+    distribution_version: "23"
     init: /usr/lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
 before_install:
   # Pull container.
-  - 'docker pull geerlingguy/docker-${distro}-ansible:latest'
+  - 'docker pull ansiblecheck/ansiblecheck:${distribution,,}-${distribution_version}'
+  - container_id=$(mktemp)
+  # Start The Built Container In The Background
+  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} ansiblecheck/ansiblecheck:"${distribution,,}"-"${distribution_version}" "${init}" > "${container_id}"'
+
+install:
 
 script:
-  - container_id=$(mktemp)
-
-  # Run container in detached state.
-  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} geerlingguy/docker-${distro}-ansible:latest "${init}" > "${container_id}"'
 
   # Ansible syntax check.
   - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml --syntax-check'
@@ -27,7 +33,7 @@ script:
   # Test role.
   - 'docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml'
 
-  # Test role idempotence.
+  # Test Idempotence
   - idempotence=$(mktemp)
   - docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml | tee -a ${idempotence}
   - >
