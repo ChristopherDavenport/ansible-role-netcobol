@@ -11,25 +11,20 @@ The software is available as an rpm so I will attempt compatibility with
 RedHat 7, Centos 7, RedHat 6, Centos 6, and Fedora.
 
 First thing first is that this product has license controls built in
-so first you will need to get a copy and place the rpm files into the
-files directory. At the time I am creating this the rpms are
--   FJSVXcbrf-11.0.0-1.0.x86_64.rpm
--   FJSVXbsrt-7.0.0-3.0.x86_64.rpm   
--   FJSVXmeft-11.0.0-2.0.x86_64.rpm
--   FJSVXcbev-11.0.0-3.0.x86_64.rpm  
--   FJSVXrds-11.0.0-1.0.x86_64.rpm
--   FJSVXcbl-11.0.0-1.0.x86_64.rpm   
--   FJSVXcblf-11.0.0-1.0.x86_64.rpm  
--   FJSVXcbr-11.0.0-1.0.x86_64.rpm   
--   FJSVXcbre-11.0.0-1.0.x86_64.rpm
+so first you will need to know the location of all the following rpm files.
+-   `FJSVXcbrf-11.0.0-1.0.x86_64.rpm`
+-   `FJSVXbsrt-7.0.0-3.0.x86_64.rpm`   
+-   `FJSVXmeft-11.0.0-2.0.x86_64.rpm`
+-   `FJSVXcbev-11.0.0-3.0.x86_64.rpm` 
+-   `FJSVXrds-11.0.0-1.0.x86_64.rpm`
+-   `FJSVXcbl-11.0.0-1.0.x86_64.rpm`   
+-   `FJSVXcblf-11.0.0-1.0.x86_64.rpm`  
+-   `FJSVXcbr-11.0.0-1.0.x86_64.rpm`   
+-   `FJSVXcbre-11.0.0-1.0.x86_64.rpm`
 
-Place these files into the files directory. If you already have the MAC address
-of the computer this is being installed on then please go and get your license
-file and also place that in the files directory.
-
-If the license file is not installed in the files directory, or already present
-on the computer then installation will echo out the mac address and fail.
-Although this default behavior can be overwritten with variables
+If you already have the MAC address of the computer this is being 
+installed on then please go and get your license file and designate
+the path the to license file.
 
 If you installed this via ansible galaxy then the default install location is
 in /etc/ansible/roles/ChristopherDavenport.netcobol
